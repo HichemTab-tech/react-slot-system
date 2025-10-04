@@ -1,8 +1,8 @@
-# React slot system
+# React Slot System
 
-*A short but clear description of your package. Explain what it does, why it’s useful, and in what context it should be used.*
+Vue-style named slots for React: declare <Slot> in your component, fill from parents via <FillSlot> using the haveSlots HOC.
 
----
+![react-slot-system banner](assets/banner.png)
 
 ## 🚀 Getting Started
 
@@ -22,67 +22,221 @@ pnpm add react-slot-system
 
 ## ☕ 60-Second TL;DR
 
-Show a minimal but practical example that someone can copy-paste to immediately see results:
+Vue-style named slots for React: declare `<Slot>` in your component, fill from parents via `<Template>` using the `hasSlots` HOC.
 
-```javascript
-import { exampleFunction } from 'react-slot-system';
+```tsx
+import { hasSlots, Slot, Template } from 'react-slot-system';
 
-export default function Demo() {
-  const result = exampleFunction('Hello');
-  return <div>{result}</div>;
+// 1. Declare slots in your component with hasSlots
+const Card = hasSlots(({ children }) => (
+  <div className="card">
+    <Slot name="header" />
+    <div className="content">{children}</div>
+    <Slot name="footer" fallback={<div>No footer</div>} />
+  </div>
+));
+
+// 2. Fill slots from parent components
+export default function App() {
+  return (
+    <Card>
+      <Template slot="header">
+        <h2>Card Title</h2>
+      </Template>
+      
+      <p>This is the main content</p>
+      
+      <Template slot="footer">
+        <button>Action</button>
+      </Template>
+    </Card>
+  );
 }
 ```
 
 ## Usage
 
-Provide a more detailed usage example:
+### Basic Example
 
-```javascript
-import { exampleFunction } from 'react-slot-system';
+Create a layout component with named slots:
 
-function Example() {
-  // Default behavior
-  const output = exampleFunction({ name: 'Alice' });
+```tsx
+import { hasSlots, Slot, Template } from 'react-slot-system';
 
-  // With a custom identifier
-  const custom = exampleFunction(42, 'myKey');
+const Layout = hasSlots(({ children }) => (
+  <div className="layout">
+    <header>
+      <Slot name="header" fallback={<h1>Default Header</h1>} />
+    </header>
+    
+    <main>{children}</main>
+    
+    <aside>
+      <Slot name="sidebar" />
+    </aside>
+    
+    <footer>
+      <Slot name="footer" />
+    </footer>
+  </div>
+));
 
+function App() {
   return (
-    <div>
-      <p>{output}</p>
-      <p>{custom}</p>
-    </div>
+    <Layout>
+      <Template slot="header">
+        <nav>Custom Navigation</nav>
+      </Template>
+      
+      <Template slot="sidebar">
+        <div>Sidebar content</div>
+      </Template>
+      
+      <div>Main page content goes here</div>
+      
+      <Template slot="footer">
+        <p>&copy; 2024 My App</p>
+      </Template>
+    </Layout>
   );
 }
+```
+
+### Dialog/Modal Example
+
+```tsx
+const Dialog = hasSlots(({ isOpen, onClose, children }) => {
+  if (!isOpen) return null;
+  
+  return (
+    <div className="modal-overlay">
+      <div className="modal">
+        <div className="modal-header">
+          <Slot name="title" fallback="Dialog" />
+          <button onClick={onClose}>×</button>
+        </div>
+        
+        <div className="modal-body">
+          {children}
+        </div>
+        
+        <div className="modal-footer">
+          <Slot name="actions" fallback={
+            <button onClick={onClose}>Close</button>
+          } />
+        </div>
+      </div>
+    </div>
+  );
+});
+
+// Usage
+<Dialog isOpen={showDialog} onClose={() => setShowDialog(false)}>
+  <Template slot="title">
+    <h2>Confirm Action</h2>
+  </Template>
+  
+  <p>Are you sure you want to delete this item?</p>
+  
+  <Template slot="actions">
+    <button onClick={handleDelete}>Delete</button>
+    <button onClick={() => setShowDialog(false)}>Cancel</button>
+  </Template>
+</Dialog>
 ```
 
 ---
 
 ## API Reference
 
-### Function `exampleFunction(args)`
+### `hasSlots(Component)`
 
-Description of what this function/method does and how to use it.
+A Higher-Order Component that enables slot functionality for your components.
 
 **Parameters:**
 
-| Parameter   | Type   | Description                        |
-|-------------|--------|------------------------------------|
-| `args`      | any    | Description of the arguments.      |
+| Parameter   | Type              | Description                               |
+|-------------|-------------------|-------------------------------------------|
+| `Component` | `React.FC<Props>` | The React component to enhance with slots |
 
 **Returns:**
 
-- Type: `any`
-Briefly describe the returned value or output.
+- Type: `React.FC<ComponentProps<typeof Component>>`  
+A new component that supports slot functionality while preserving all original props.
 
 **Example:**
 
-```javascript
-import { exampleFunction } from 'react-slot-system';
-
-const result = exampleFunction('Hello, world!');
-console.log(result);
+```tsx
+const MyComponent = hasSlots(({ title, children }) => (
+  <div>
+    <h1>{title}</h1>
+    <Slot name="header" />
+    {children}
+    <Slot name="footer" />
+  </div>
+));
 ```
+
+### `<Slot />`
+
+A component that renders content assigned to a named slot.
+
+**Props:**
+
+| Prop       | Type              | Required | Description                                     |
+|------------|-------------------|----------|-------------------------------------------------|
+| `name`     | `string`          | Yes      | The unique identifier for the slot              |
+| `fallback` | `React.ReactNode` | No       | Content to show when no template fills the slot |
+
+**Example:**
+
+```tsx
+<Slot name="header" />
+<Slot name="sidebar" fallback={<div>Default sidebar</div>} />
+```
+
+### `<Template />`
+
+A component that defines content for a specific slot. It doesn't render directly but provides content to the corresponding `<Slot />`.
+
+**Props:**
+
+| Prop       | Type              | Required | Description                       |
+|------------|-------------------|----------|-----------------------------------|
+| `slot`     | `string`          | Yes      | The name of the slot to fill      |
+| `children` | `React.ReactNode` | No       | The content to render in the slot |
+
+**Example:**
+
+```tsx
+<Template slot="header">
+  <nav>Navigation content</nav>
+</Template>
+```
+
+---
+
+## Key Features
+
+- **Lightweight**: Minimal overhead with efficient context usage
+- **Performance optimized**: Uses [`react-ctx-selector`](https://github.com/HichemTab-tech/react-context-selector) for optimal re-renders
+- **Flexible**: Support for fallback content and conditional slots
+- **Developer-friendly**: Simple API with clear separation of concerns
+
+## How It Works
+
+1. **`hasSlots`** wraps your component with a context provider that manages slot content
+2. **`<Template>`** components register their content with specific slot names during render
+3. **`<Slot>`** components retrieve and render the content assigned to their name
+4. The system uses `useLayoutEffect` to ensure proper timing and prevent flickering
+
+## When to Use
+
+- **Layout components** with multiple content areas
+- **Modal/Dialog systems** with customizable headers, bodies, and footers
+- **Card components** with optional sections
+- **Dashboard layouts** with configurable widgets
+- **Any component** that needs flexible content composition
 
 ---
 
@@ -100,11 +254,14 @@ Please follow existing coding styles and clearly state your changes in the pull 
 
 ## ❓ FAQ
 
-**Question 1**
-Answer.
+**Q: Can I use multiple Templates for the same slot?**  
+A: The last Template rendered for a given slot name will be used. Templates override each other.
 
-**Question 2**
-Answer.
+**Q: What happens if I don't provide a Template for a Slot?**  
+A: The Slot will render its `fallback` prop if provided, otherwise it renders nothing.
+
+**Q: How does this compare to React's children prop?**  
+A: While `children` allows one content area, slots enable multiple named content areas with fallbacks and better composition patterns.
 
 ## Issues
 
