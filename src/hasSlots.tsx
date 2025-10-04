@@ -18,7 +18,7 @@ export type SlotContextData = {
 export const context = createContext<[SlotContextData, Dispatch<SetStateAction<SlotContextData>>]>(undefined!);
 
 // noinspection JSUnusedGlobalSymbols
-export function hasSlots<Props extends {}>(WrappedComponent: React.FC<Props>) {
+export function hasSlots<Props extends PropsWithChildren>(WrappedComponent: React.FC<Props>) {
 
     const Provider = ({children}: PropsWithChildren) => {
 
