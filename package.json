@@ -2,13 +2,12 @@
   "name": "react-slot-system",
   "version": "0.1.0",
   "type": "module",
-  "description": "",
+  "description": "Vue-style named slots for React: declare <Slot> in your component, fill from parents via <Template> using the hasSlots HOC.",
   "keywords": [
     "react",
-    "surveyjs",
-    "survey-js",
-    "survey",
-    "creator",
+    "slots",
+    "react-slots",
+    "vuejs-slots",
     "react-package",
     "react-library"
   ],
