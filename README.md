@@ -4,7 +4,7 @@ Vue-style named slots for React: declare <Slot> in your component, fill from par
 
 ![react-slot-system banner](assets/banner.png)
 
-## 🚀 Getting Started
+## Getting Started
 
 Start by installing the package via your preferred package manager:
 
@@ -153,6 +153,11 @@ const Dialog = hasSlots(({ isOpen, onClose, children }) => {
 
 A Higher-Order Component that enables slot functionality for your components.
 
+**⚠️ Important Requirements:**
+- Your component **MUST** accept `children` prop (use `PropsWithChildren<YourProps>`)
+- Your component **MUST** render `{children}` in its JSX
+- Without these, `<Template>` components won't work properly
+
 **Parameters:**
 
 | Parameter   | Type              | Description                               |
@@ -167,12 +172,22 @@ A new component that supports slot functionality while preserving all original p
 **Example:**
 
 ```tsx
-const MyComponent = hasSlots(({ title, children }) => (
+// ✅ CORRECT - Has children prop and renders {children}
+const MyComponent = hasSlots(({ title, children }: PropsWithChildren<{ title: string }>) => (
   <div>
     <h1>{title}</h1>
     <Slot name="header" />
-    {children}
+    {children}  {/* This is REQUIRED */}
     <Slot name="footer" />
+  </div>
+));
+
+// ❌ WRONG - Missing children prop or not rendering {children}
+const BrokenComponent = hasSlots(({ title }: { title: string }) => (
+  <div>
+    <h1>{title}</h1>
+    <Slot name="header" />
+    {/* Missing {children} - Templates won't work! */}
   </div>
 ));
 ```
@@ -230,6 +245,11 @@ A component that defines content for a specific slot. It doesn't render directly
 3. **`<Slot>`** components retrieve and render the content assigned to their name
 4. The system uses `useLayoutEffect` to ensure proper timing and prevent flickering
 
+**📋 Requirements for slot system to work:**
+- Component wrapped with `hasSlots` must accept `children` prop (`PropsWithChildren<T>`)
+- Component must render `{children}` in its JSX tree
+- `<Template>` components are passed as children and register themselves automatically
+
 ## When to Use
 
 - **Layout components** with multiple content areas
@@ -254,11 +274,17 @@ Please follow existing coding styles and clearly state your changes in the pull 
 
 ## ❓ FAQ
 
+**Q: Why do I get TypeScript errors when using hasSlots?**  
+A: Your component must accept `children` prop using `PropsWithChildren<YourProps>` and render `{children}` in its JSX. Without this, Templates won't work and TypeScript will show errors.
+
 **Q: Can I use multiple Templates for the same slot?**  
 A: The last Template rendered for a given slot name will be used. Templates override each other.
 
 **Q: What happens if I don't provide a Template for a Slot?**  
 A: The Slot will render its `fallback` prop if provided, otherwise it renders nothing.
+
+**Q: My Templates aren't rendering, what's wrong?**  
+A: Make sure your component wrapped with `hasSlots` renders `{children}` in its JSX. Templates are passed as children and need to be rendered to register themselves.
 
 **Q: How does this compare to React's children prop?**  
 A: While `children` allows one content area, slots enable multiple named content areas with fallbacks and better composition patterns.
