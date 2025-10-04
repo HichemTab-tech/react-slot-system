@@ -38,6 +38,9 @@ importers:
       react:
         specifier: ^19.2.0
         version: 19.2.0
+      react-ctx-selector:
+        specifier: ^0.1.4
+        version: 0.1.4
       react-dom:
         specifier: ^19.2.0
         version: 19.2.0(react@19.2.0)
@@ -1226,6 +1229,9 @@ packages:
 
   quansync@0.2.11:
     resolution: {integrity: sha512-AifT7QEbW9Nri4tAwR5M/uzpBuqfZf+zwaEM/QkzEjj7NBuFD2rBuy0K3dE+8wltbezDV7JMA0WfnCPYRSYbXA==}
+
+  react-ctx-selector@0.1.4:
+    resolution: {integrity: sha512-I0ft7X1H0DmA009mkxTRU7F3bnGLNHcxUCVlUkRm5G84szfKCTBtJSW23hEsSp6Ouv0p2+LtWYowuEUXI5bF/A==}
 
   react-dom@19.2.0:
     resolution: {integrity: sha512-UlbRu4cAiGaIewkPyiRGJk0imDN2T3JjieT6spoL2UeSf5od4n5LB/mQ4ejmxhCFT1tYe8IvaFulzynWovsEFQ==}
@@ -2628,6 +2634,8 @@ snapshots:
   punycode@2.3.1: {}
 
   quansync@0.2.11: {}
+
+  react-ctx-selector@0.1.4: {}
 
   react-dom@19.2.0(react@19.2.0):
     dependencies:
