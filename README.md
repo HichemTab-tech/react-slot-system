@@ -1,115 +1,121 @@
-# npm-package-skeleton 🧱
+# React slot system
 
-A simple and powerful skeleton to kickstart your next NPM package.  
-Designed to get out of your way and let you focus on building.  
-
-> 🎯 Comes with built-in setup automation, GitHub workflows, author metadata, and more!
+*A short but clear description of your package. Explain what it does, why it’s useful, and in what context it should be used.*
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Getting Started
 
-1. **Use the template**  
-   Click the **[Use this template](https://github.com/HichemTab-tech/npm-package-skeleton/generate)** button on the GitHub page
-   to create your own repo from this skeleton.
+Start by installing the package via your preferred package manager:
 
-2. **Clone your new repository**
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-   cd YOUR_REPO_NAME
-   ```
+```sh
+npm install react-slot-system
+```
 
-3. **Run the setup script**
-   ```bash
-   npm install
-   npm run setup
-   ```
+or, if using pnpm:
 
-4. **Answer the prompts**, and your package will be tailored to you:
-   - Package name
-   - Author info
-   - GitHub username
-   - Preferred package manager (`npm` or `pnpm`)
-   - etc.
-
-5. **Done!**  
-   Your skeleton is now personalized, cleaned up, initialized with Git, and ready to code 🎸  
-   **You can even publish to npm with a single GitHub release!**
-
-## 📦 Publishing to npm
-
-This skeleton comes with a preconfigured GitHub Action to automatically publish your package to [npmjs.com](https://www.npmjs.com/) whenever you create a GitHub release. 🎉
-
-To enable it:
-
-1. **Create an npm access token**:
-    - Go to your [npm account tokens page](https://www.npmjs.com/settings/tokens).
-    - Click **"Generate New Token"**.
-    - Choose **"Automation"** (or **"Classic" with "Publish" access** if you prefer).
-    - Copy the generated token.
-
-2. **Add the token to your GitHub repo**:
-    - Go to your repository on GitHub.
-    - Navigate to **Settings** → **Secrets and variables** → **Actions** → **New repository secret**.
-    - Name it exactly: `NODE_AUTH_TOKEN`
-    - Paste your token as the value.
-
-3. **Publish your package**:
-    - Push your changes to `main` (or your default branch).
-    - Go to the **Releases** tab on GitHub.
-    - Click **"Draft a new release"** and fill in the version/tag.
-    - Once published, the GitHub Action will automatically publish your package to npm. 🚀
-
-✅ That’s it! Now your releases will sync directly to npm with no extra steps.
-
+```sh
+pnpm add react-slot-system
+```
 
 ---
 
-## ✨ What's Included
+## ☕ 60-Second TL;DR
 
-- 🔁 Replaces placeholders with your custom info.
-- 🧪 Ready-to-go structure.
-- 🔧 GitHub Workflows:
-    - Auto-assign issues
-    - Dependabot support
-    - ✅ **Publish to npm on GitHub release** (just create a release tag, and it’s live!)
-- 📋 GitHub repo enhancements:
-    - Issue templates for structured bug reports and feature requests.
-    - Pull Request templates to encourage clear and detailed contributions.
-- 🧹 Auto-cleans stub files and setup script after running.
-- 💡 Package manager-based CI workflows (only keeps the one you need!).
+Show a minimal but practical example that someone can copy-paste to immediately see results:
+
+```javascript
+import { exampleFunction } from 'react-slot-system';
+
+export default function Demo() {
+  const result = exampleFunction('Hello');
+  return <div>{result}</div>;
+}
+```
+
+## Usage
+
+Provide a more detailed usage example:
+
+```javascript
+import { exampleFunction } from 'react-slot-system';
+
+function Example() {
+  // Default behavior
+  const output = exampleFunction({ name: 'Alice' });
+
+  // With a custom identifier
+  const custom = exampleFunction(42, 'myKey');
+
+  return (
+    <div>
+      <p>{output}</p>
+      <p>{custom}</p>
+    </div>
+  );
+}
+```
+
+---
+
+## API Reference
+
+### Function `exampleFunction(args)`
+
+Description of what this function/method does and how to use it.
+
+**Parameters:**
+
+| Parameter   | Type   | Description                        |
+|-------------|--------|------------------------------------|
+| `args`      | any    | Description of the arguments.      |
+
+**Returns:**
+
+- Type: `any`
+Briefly describe the returned value or output.
+
+**Example:**
+
+```javascript
+import { exampleFunction } from 'react-slot-system';
+
+const result = exampleFunction('Hello, world!');
+console.log(result);
+```
 
 ---
 
-## 📦 Why Use This?
+## 🤝 Contributions
 
-Creating a new NPM package can be a chore:
-- Configure GitHub flows ✅
-- Clean project structure ✅
-- Automate publishing ✅
+Contributions are welcome! Feel free to:
 
-Let this repo do all the boring stuff, so you can jump straight into the code.
+1. Fork the repository
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
----
+Please follow existing coding styles and clearly state your changes in the pull request.
 
-## 🤝 Contribute
+## ❓ FAQ
 
-This is just the beginning.
+**Question 1**
+Answer.
 
-There’s so much room to grow — from better GitHub automations (issue bots, release helpers) to richer setup options.
+**Question 2**
+Answer.
 
-If you’ve got ideas, open a pull request or start a discussion — **contributions are super welcome!** 🌱
+## Issues
 
----
-
-## 🌟 Support
-
-If this helped you out,
-please consider giving the repo a ⭐️ on [GitHub](https://github.com/HichemTab-tech/npm-package-skeleton) —
-every bit of support means a lot!
-
----
+If you encounter any issue, please open an issue [here](https://github.com/HichemTab-tech/react-slot-system/issues).
 
 ## License
 
-[MIT](./LICENSE)
+Distributed under the MIT License. See [`LICENSE`](LICENSE) file for more details.
+
+&copy; 2025 [Hichem Taboukouyout](mailto:hichem.taboukouyout@hichemtab-tech.me)
+
+---
+
+_If you found this package helpful, consider leaving a star! ⭐️_
