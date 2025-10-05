@@ -39,11 +39,14 @@ importers:
         specifier: ^19.2.0
         version: 19.2.0
       react-ctx-selector:
-        specifier: ^0.1.4
-        version: 0.1.4
+        specifier: ^0.1.5
+        version: 0.1.5
       react-dom:
         specifier: ^19.2.0
         version: 19.2.0(react@19.2.0)
+      react-exposed-states:
+        specifier: ^1.0.5
+        version: 1.0.5
       tailwindcss:
         specifier: ^4.1.14
         version: 4.1.14
@@ -1230,13 +1233,16 @@ packages:
   quansync@0.2.11:
     resolution: {integrity: sha512-AifT7QEbW9Nri4tAwR5M/uzpBuqfZf+zwaEM/QkzEjj7NBuFD2rBuy0K3dE+8wltbezDV7JMA0WfnCPYRSYbXA==}
 
-  react-ctx-selector@0.1.4:
-    resolution: {integrity: sha512-I0ft7X1H0DmA009mkxTRU7F3bnGLNHcxUCVlUkRm5G84szfKCTBtJSW23hEsSp6Ouv0p2+LtWYowuEUXI5bF/A==}
+  react-ctx-selector@0.1.5:
+    resolution: {integrity: sha512-ANI5a812/rv9+sHPW5/SwX8HjLAOuBxSfsDBc4mueOyKzLjRuIzG1Ap0OUYf/ov0EotTjhQQ1d2pcDnNq93naw==}
 
   react-dom@19.2.0:
     resolution: {integrity: sha512-UlbRu4cAiGaIewkPyiRGJk0imDN2T3JjieT6spoL2UeSf5od4n5LB/mQ4ejmxhCFT1tYe8IvaFulzynWovsEFQ==}
     peerDependencies:
       react: ^19.2.0
+
+  react-exposed-states@1.0.5:
+    resolution: {integrity: sha512-jAn6xrikXE4iktBkvZCC2+8cmZI+v+8wuHM1CsGXDrJ/XycALxIeupbpL0iIBHGT6UBt5SMrnJDwqxG2uIidSw==}
 
   react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
@@ -2635,12 +2641,16 @@ snapshots:
 
   quansync@0.2.11: {}
 
-  react-ctx-selector@0.1.4: {}
+  react-ctx-selector@0.1.5: {}
 
   react-dom@19.2.0(react@19.2.0):
     dependencies:
       react: 19.2.0
       scheduler: 0.27.0
+
+  react-exposed-states@1.0.5:
+    dependencies:
+      classnames: 2.5.1
 
   react-is@17.0.2: {}
 

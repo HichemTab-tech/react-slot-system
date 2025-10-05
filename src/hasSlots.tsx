@@ -6,6 +6,7 @@ import React, {
     useState
 } from "react";
 import {createContext} from "react-ctx-selector";
+import {expose} from "react-exposed-states";
 
 export type SlotContextData = {
     slots: Record<string, React.ReactNode>,
@@ -22,10 +23,10 @@ export function hasSlots<Props extends PropsWithChildren>(WrappedComponent: Reac
 
     const Provider = ({children}: PropsWithChildren) => {
 
-        const s = useState<SlotContextData>({
+        const s = expose(useState<SlotContextData>({
             slots: {},
             ready: false,
-        });
+        }), "slots");
 
         useLayoutEffect(() => {
             s[1]((prev) => ({...prev, ready: true}));
@@ -38,10 +39,12 @@ export function hasSlots<Props extends PropsWithChildren>(WrappedComponent: Reac
         )
     }
 
+    const WrappedComponent_ = WrappedComponent as React.FC<Props>;
+
     return (props: ComponentProps<typeof WrappedComponent>) => {
         return (
             <Provider>
-                <WrappedComponent {...props}/>
+                <WrappedComponent_ {...props}/>
             </Provider>
         )
     }

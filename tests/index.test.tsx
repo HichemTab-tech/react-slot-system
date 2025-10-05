@@ -24,8 +24,8 @@ describe('React Slot System', () => {
                 </EnhancedComponent>
             );
 
-            expect(screen.getByText('Test Title')).toBeDefined();
-            expect(screen.getByText('Slot content')).toBeDefined();
+            expect(screen.getByText('Test Title')).not.toBeNull();
+            expect(screen.getByText('Slot content')).not.toBeNull();
         });
 
         it('should preserve original component props', () => {
@@ -55,10 +55,10 @@ describe('React Slot System', () => {
                 </EnhancedComponent>
             );
 
-            expect(screen.getByText('Main Title')).toBeDefined();
-            expect(screen.getByText('Sub Title')).toBeDefined();
-            expect(screen.getByText('Count: 42')).toBeDefined();
-            expect(screen.getByText('Content here')).toBeDefined();
+            expect(screen.getByText('Main Title')).not.toBeNull();
+            expect(screen.getByText('Sub Title')).not.toBeNull();
+            expect(screen.getByText('Count: 42')).not.toBeNull();
+            expect(screen.getByText('Content here')).not.toBeNull();
         });
     });
 
@@ -81,8 +81,8 @@ describe('React Slot System', () => {
                 </TestComponent>
             );
 
-            expect(screen.getByText('Header Content')).toBeDefined();
-            expect(screen.getByText('Main content')).toBeDefined();
+            expect(screen.getByText('Header Content')).not.toBeNull();
+            expect(screen.getByText('Main content')).not.toBeNull();
         });
 
         it('should render nothing when no template is provided and no fallback', () => {
@@ -92,27 +92,29 @@ describe('React Slot System', () => {
                 </TestComponent>
             );
 
-            expect(screen.getByText('Main content')).toBeDefined();
+            expect(screen.getByText('Main content')).not.toBeNull();
         });
 
         it('should render fallback content when no template is provided', () => {
-            const ComponentWithFallback = hasSlots(() => (
+            const ComponentWithFallback = hasSlots(({children}: { children?: React.ReactNode }) => (
                 <div>
                     <Slot name="header" fallback={<h1>Default Header</h1>}/>
                     <Slot name="footer" fallback={<p>Default Footer</p>}/>
+                    {children}
                 </div>
             ));
 
             render(<ComponentWithFallback/>);
 
-            expect(screen.getByText('Default Header')).toBeDefined();
-            expect(screen.getByText('Default Footer')).toBeDefined();
+            expect(screen.getByText('Default Header')).not.toBeNull();
+            expect(screen.getByText('Default Footer')).not.toBeNull();
         });
 
         it('should prioritize template content over fallback', () => {
-            const ComponentWithFallback = hasSlots(() => (
+            const ComponentWithFallback = hasSlots(({children}: { children?: React.ReactNode }) => (
                 <div>
                     <Slot name="header" fallback={<h1>Default Header</h1>}/>
+                    {children}
                 </div>
             ));
 
@@ -124,16 +126,17 @@ describe('React Slot System', () => {
                 </ComponentWithFallback>
             );
 
-            expect(screen.getByText('Custom Header')).toBeDefined();
-            expect(screen.queryByText('Default Header')).not.toBeDefined();
+            expect(screen.getByText('Custom Header')).not.toBeNull();
+            expect(screen.queryByText('Default Header')).toBeNull();
         });
 
         it('should handle multiple slots with different content', () => {
-            const MultiSlotComponent = hasSlots(() => (
+            const MultiSlotComponent = hasSlots(({children}: { children?: React.ReactNode }) => (
                 <div>
                     <Slot name="header"/>
                     <Slot name="sidebar"/>
                     <Slot name="footer"/>
+                    {children}
                 </div>
             ));
 
@@ -151,9 +154,9 @@ describe('React Slot System', () => {
                 </MultiSlotComponent>
             );
 
-            expect(screen.getByText('Page Header')).toBeDefined();
-            expect(screen.getByText('Navigation')).toBeDefined();
-            expect(screen.getByText('Page Footer')).toBeDefined();
+            expect(screen.getByText('Page Header')).not.toBeNull();
+            expect(screen.getByText('Navigation')).not.toBeNull();
+            expect(screen.getByText('Page Footer')).not.toBeNull();
         });
     });
 
@@ -170,9 +173,10 @@ describe('React Slot System', () => {
         });
 
         it('should handle complex JSX content', () => {
-            const ComplexComponent = hasSlots(() => (
+            const ComplexComponent = hasSlots(({children}: { children?: React.ReactNode }) => (
                 <div>
                     <Slot name="complex"/>
+                    {children}
                 </div>
             ));
 
@@ -193,18 +197,19 @@ describe('React Slot System', () => {
                 </ComplexComponent>
             );
 
-            expect(screen.getByText('Complex Content')).toBeDefined();
-            expect(screen.getByText('Item 1')).toBeDefined();
-            expect(screen.getByText('Item 2')).toBeDefined();
-            expect(screen.getByText('Click me')).toBeDefined();
+            expect(screen.getByText('Complex Content')).not.toBeNull();
+            expect(screen.getByText('Item 1')).not.toBeNull();
+            expect(screen.getByText('Item 2')).not.toBeNull();
+            expect(screen.getByText('Click me')).not.toBeNull();
         });
 
         it('should handle multiple templates for different slots', () => {
-            const MultiTemplateComponent = hasSlots(() => (
+            const MultiTemplateComponent = hasSlots(({children}: { children?: React.ReactNode }) => (
                 <div>
                     <Slot name="first"/>
                     <Slot name="second"/>
                     <Slot name="third"/>
+                    {children}
                 </div>
             ));
 
@@ -222,15 +227,16 @@ describe('React Slot System', () => {
                 </MultiTemplateComponent>
             );
 
-            expect(screen.getByText('First slot')).toBeDefined();
-            expect(screen.getByText('Second slot')).toBeDefined();
-            expect(screen.getByText('Third slot')).toBeDefined();
+            expect(screen.getByText('First slot')).not.toBeNull();
+            expect(screen.getByText('Second slot')).not.toBeNull();
+            expect(screen.getByText('Third slot')).not.toBeNull();
         });
 
         it('should handle template override (last template wins)', () => {
-            const OverrideComponent = hasSlots(() => (
+            const OverrideComponent = hasSlots(({children}: { children?: React.ReactNode }) => (
                 <div>
                     <Slot name="content"/>
+                    {children}
                 </div>
             ));
 
@@ -245,20 +251,21 @@ describe('React Slot System', () => {
                 </OverrideComponent>
             );
 
-            expect(screen.queryByText('First template')).not.toBeDefined();
-            expect(screen.getByText('Second template')).toBeDefined();
+            expect(screen.queryByText('First template')).toBeNull();
+            expect(screen.getByText('Second template')).not.toBeNull();
         });
     });
 
     describe('Integration scenarios', () => {
         it('should work with nested components', () => {
-            const InnerComponent = hasSlots(() => (
+            const InnerComponent = hasSlots(({children}: { children?: React.ReactNode }) => (
                 <div className="inner">
                     <Slot name="inner-content"/>
+                    {children}
                 </div>
             ));
 
-            const OuterComponent = hasSlots(() => (
+            const OuterComponent = hasSlots(({children}: { children?: React.ReactNode }) => (
                 <div className="outer">
                     <Slot name="outer-header"/>
                     <InnerComponent>
@@ -267,6 +274,7 @@ describe('React Slot System', () => {
                         </Template>
                     </InnerComponent>
                     <Slot name="outer-footer"/>
+                    {children}
                 </div>
             ));
 
@@ -281,9 +289,9 @@ describe('React Slot System', () => {
                 </OuterComponent>
             );
 
-            expect(screen.getByText('Outer Header')).toBeDefined();
-            expect(screen.getByText('Inner content')).toBeDefined();
-            expect(screen.getByText('Outer Footer')).toBeDefined();
+            expect(screen.getByText('Outer Header')).not.toBeNull();
+            expect(screen.getByText('Inner content')).not.toBeNull();
+            expect(screen.getByText('Outer Footer')).not.toBeNull();
         });
 
         it('should work with conditional rendering', () => {
@@ -306,8 +314,8 @@ describe('React Slot System', () => {
                 </ConditionalComponent>
             );
 
-            expect(screen.queryByText('Conditional Header')).not.toBeDefined();
-            expect(screen.getByText('Always visible')).toBeDefined();
+            expect(screen.queryByText('Conditional Header')).toBeNull();
+            expect(screen.getByText('Always visible')).not.toBeNull();
 
             rerender(
                 <ConditionalComponent showHeader={true}>
@@ -320,8 +328,8 @@ describe('React Slot System', () => {
                 </ConditionalComponent>
             );
 
-            expect(screen.getByText('Conditional Header')).toBeDefined();
-            expect(screen.getByText('Always visible')).toBeDefined();
+            expect(screen.getByText('Conditional Header')).not.toBeNull();
+            expect(screen.getByText('Always visible')).not.toBeNull();
         });
 
         it('should work with dynamic slot names', () => {
@@ -340,7 +348,7 @@ describe('React Slot System', () => {
                 </DynamicComponent>
             );
 
-            expect(screen.getByText('Dynamic content')).toBeDefined();
+            expect(screen.getByText(/Dynamic\s*content/)).not.toBeNull();
 
             rerender(
                 <DynamicComponent slotName="other">
@@ -350,14 +358,15 @@ describe('React Slot System', () => {
                 </DynamicComponent>
             );
 
-            expect(screen.queryByText('Dynamic content')).not.toBeDefined();
-            expect(screen.getByText('No content')).toBeDefined();
+            expect(() => screen.getByText(/Dynamic\s*content/)).toThrow();
+            expect(screen.getByText('No content')).not.toBeNull();
         });
 
         it('should handle empty templates', () => {
-            const EmptyTemplateComponent = hasSlots(() => (
+            const EmptyTemplateComponent = hasSlots(({children}: { children?: React.ReactNode }) => (
                 <div>
                     <Slot name="empty" fallback={<p>Fallback</p>}/>
+                    {children}
                 </div>
             ));
 
@@ -370,40 +379,43 @@ describe('React Slot System', () => {
             );
 
             // Should render null (empty) instead of fallback
-            expect(screen.queryByText('Fallback')).not.toBeDefined();
+            expect(screen.queryByText('Fallback')).toBeNull();
         });
     });
 
     describe('Edge cases', () => {
         it('should handle components without any templates', () => {
-            const NoTemplateComponent = hasSlots(() => (
+            const NoTemplateComponent = hasSlots(({children}: { children?: React.ReactNode }) => (
                 <div>
                     <p>Regular content</p>
                     <Slot name="missing"/>
+                    {children}
                 </div>
             ));
 
             render(<NoTemplateComponent/>);
 
-            expect(screen.getByText('Regular content')).toBeDefined();
+            expect(screen.getByText('Regular content')).not.toBeNull();
         });
 
         it('should handle slots without names gracefully', () => {
-            const InvalidSlotComponent = hasSlots(() => (
+            const InvalidSlotComponent = hasSlots(({children}: { children?: React.ReactNode }) => (
                 <div>
                     <Slot name="" fallback={<p>Empty name fallback</p>}/>
+                    {children}
                 </div>
             ));
 
             render(<InvalidSlotComponent/>);
 
-            expect(screen.getByText('Empty name fallback')).toBeDefined();
+            expect(screen.getByText('Empty name fallback')).not.toBeNull();
         });
 
         it('should handle templates without slot names', () => {
-            const NoSlotNameComponent = hasSlots(() => (
+            const NoSlotNameComponent = hasSlots(({children}: { children?: React.ReactNode }) => (
                 <div>
                     <Slot name="test" fallback={<p>Fallback content</p>}/>
+                    {children}
                 </div>
             ));
 
@@ -416,8 +428,8 @@ describe('React Slot System', () => {
             );
 
             // Should use fallback since template has empty slot name
-            expect(screen.getByText('Fallback content')).toBeDefined();
-            expect(screen.queryByText('Empty slot name')).not.toBeDefined();
+            expect(screen.getByText('Fallback content')).not.toBeNull();
+            expect(screen.queryByText('Empty slot name')).toBeNull();
         });
     });
 });

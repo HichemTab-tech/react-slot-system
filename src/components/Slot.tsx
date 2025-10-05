@@ -5,8 +5,24 @@ import {context} from "../hasSlots";
 // noinspection JSUnusedGlobalSymbols
 export const Slot = ({name, fallback}: {name: string;fallback?: React.ReactNode}) => {
 
-    const slot = useContextSelector(context, (ctx) => ctx[0].slots[name], (a,b) => Object.is(a,b));
-    const ready = useContextSelector(context, (ctx) => ctx[0].ready, (a,b) => Object.is(a,b));
+    let slot, ready;
+    try {
+        slot = useContextSelector(context, (ctx) => {
+            if (Object.keys(ctx[0].slots).includes(name)) {
+                return ctx[0].slots[name]??null;
+            }
+            else{
+                return undefined;
+            }
+        }, (a, b) => Object.is(a, b));
+    } catch (e) {
+        slot = undefined;
+    }
+    try {
+        ready = useContextSelector(context, (ctx) => ctx[0].ready, (a, b) => Object.is(a, b));
+    } catch (e) {
+        ready = false;
+    }
 
-    return !ready ? null : (slot ?? fallback)
+    return !ready ? null : (typeof slot !== 'undefined' ? slot : fallback)
 }
