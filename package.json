@@ -50,7 +50,7 @@
     "classnames": "^2.5.1",
     "jsdom": "^28.0.0",
     "react": "^19.2.0",
-    "react-ctx-selector": "^0.4.0",
+    "react-ctx-selector": "^0.5.0",
     "react-dom": "^19.2.0",
     "react-exposed-states": "^1.0.5",
     "tailwindcss": "^4.1.14",
